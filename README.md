@@ -98,9 +98,8 @@ npx tsx scripts/watch_deployments.ts --min-score 67
 ## Try it live
 
 A Telegram demo bot wraps the same scoring logic so you can test it in chat
-without installing anything: send `/scan <wallet>` to the bot.
-
-> Bot link: _add your @BotFather bot username here once deployed._
+without installing anything. Open **[@scry_intel_bot](https://t.me/scry_intel_bot)**
+and send `/demo`, or paste any Solana wallet address.
 
 Source + deploy steps: [`scry-bot`](../scry-bot).
 
