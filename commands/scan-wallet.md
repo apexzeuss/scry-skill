@@ -12,7 +12,7 @@ Run the scanner from the skill root:
 npx tsx scripts/scan_wallet.ts $ARGUMENTS --json
 ```
 
-Then present the result to the user following `skills/wallet-risk-scoring.md`:
+Then present the result to the user following `skill/wallet-risk-scoring.md`:
 
 1. Lead with the risk level + score and the one-line summary.
 2. Explain the specific signals that drove the score.

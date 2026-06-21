@@ -48,7 +48,7 @@ when the deployer looks clean. That composition is the point of the skill.
 ## Install
 
 ```bash
-bash installer.sh
+bash install.sh
 ```
 
 Requires Node 18+. Optionally set a faster RPC for the full signal set:
@@ -136,8 +136,8 @@ Every report also includes:
 ## Repo layout
 
 ```
-SKILL.md                      entry point / router
-skills/
+skill/
+  SKILL.md                    entry point / router (progressive loading)
   wallet-risk-scoring.md      module 1 instructions
   deployment-watcher.md       module 2 instructions
 scripts/
@@ -150,7 +150,7 @@ commands/
   watch-deployments.md        /watch-deployments
 rules/
   risk-thresholds.md          scoring weights + thresholds (tune here)
-installer.sh
+install.sh
 LICENSE                       MIT
 ```
 

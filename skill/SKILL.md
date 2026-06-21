@@ -15,18 +15,18 @@ using only standard Solana RPC (no paid API required to start):
 ## Routing
 
 - Wallet trust / "is this address safe" / risk score
-  → follow `skills/wallet-risk-scoring.md`
+  → follow `wallet-risk-scoring.md`
 - Monitor new deployments / "watch for new tokens" / flag rugs at launch
-  → follow `skills/deployment-watcher.md`
+  → follow `deployment-watcher.md`
 
-Both modules share the scoring logic in `scripts/scan_wallet.ts`. The scoring
-weights and thresholds live in `rules/risk-thresholds.md` so they are easy to
-review and tune.
+Both modules share the scoring logic in `scripts/scan_wallet.ts` (repo root). The
+scoring weights and thresholds live in `rules/risk-thresholds.md` so they are easy
+to review and tune.
 
 ## Setup (once)
 
 ```bash
-bash installer.sh         # installs deps
+bash install.sh           # installs deps
 # optional but recommended for full signal coverage:
 export SOLANA_RPC_URL="https://mainnet.helius-rpc.com/?api-key=YOUR_KEY"
 ```

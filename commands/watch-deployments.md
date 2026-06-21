@@ -16,7 +16,7 @@ npx tsx scripts/watch_deployments.ts --once --blocks 3 $ARGUMENTS --json
 For continuous monitoring (user explicitly wants it to keep running), drop
 `--once` and let it poll; remind the user it runs until Ctrl-C.
 
-Then present results following `skills/deployment-watcher.md`:
+Then present results following `skill/deployment-watcher.md`:
 
 1. For each flagged deployment, state kind (token vs program), deployer score,
    and the flag reason.

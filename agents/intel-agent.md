@@ -18,7 +18,7 @@ Combines both modules into one "scan + score" pass.
 1. If the user gave addresses, score each with `scripts/scan_wallet.ts` and skip
    to step 4.
 2. Otherwise sweep recent deployments with `scripts/watch_deployments.ts --once`
-   (see `skills/deployment-watcher.md`).
+   (see `skill/deployment-watcher.md`).
 3. Each flagged deployment already carries its deployer's risk score.
 4. Rank everything by deployer risk score, highest first.
 5. Return a short briefing:
