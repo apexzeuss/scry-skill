@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# installer.sh — set up the scry-skill.
+# install.sh — set up the scry-skill.
 #
 # Installs Node dependencies and prints next steps. Safe to re-run.
 

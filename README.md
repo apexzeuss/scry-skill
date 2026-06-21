@@ -23,17 +23,18 @@ provides that signal from plain Solana RPC, with no paid API required to start.
 
 ## Does it actually work?
 
-Every row below is a real mainnet address, scored by the command shown. The
-scores are reproducible (run them yourself), and they track the wallet's actual
-on-chain behaviour rather than a label we assigned.
+Every row below is a real mainnet address, scored by the command shown. Scores
+move as wallets keep acting and public RPC data availability changes, but the
+verdicts are reproducible: new+thin scores high, deep+organic scores low, and
+unknown sits in the middle.
 
 | Address | Real profile | Scry verdict | Why |
 | --- | --- | --- | --- |
-| `8VRnS42EtHKv2xLvTeABZypUjjAdbJ6KHZciB1RoWbLy` | Very active, 1000+ recent txns | 🟢 LOW (6) | Deep, organic history |
-| `DTSUkYHd2e9P2HLyZfbLarsbDdPhQUhZnWjRYuJZQRC8` | High-frequency bot, one app | 🟢 LOW (30) | Established, just concentrated |
+| `8VRnS42EtHKv2xLvTeABZypUjjAdbJ6KHZciB1RoWbLy` | Very active, 1000+ recent txns | 🟢 LOW (~6-10) | Deep, organic history |
+| `DTSUkYHd2e9P2HLyZfbLarsbDdPhQUhZnWjRYuJZQRC8` | High-frequency bot, one app | 🟢 LOW (~30) | Established, just concentrated |
 | _any unused address_ | No history at all | 🟡 MEDIUM (54) | Unknown ≠ safe; not vouched for |
-| `7i1ggLj7RHFf4TqrzEax9fNihKPzhBXQZkpUc4R3n8Zn` | Brand-new deployer, 10 txns | 🔴 HIGH (73) | Young + thin history |
-| `DSRTDRbo71L4K3SiKisdHKoZKzJRruBQkbhiFsqcvcax` | Brand-new deployer, 7 txns | 🔴 HIGH (72) | Young + thin history |
+| `7i1ggLj7RHFf4TqrzEax9fNihKPzhBXQZkpUc4R3n8Zn` | Brand-new deployer, 10 txns | 🔴 HIGH (~73) | Young + thin history |
+| `DSRTDRbo71L4K3SiKisdHKoZKzJRruBQkbhiFsqcvcax` | Brand-new deployer, 7 txns | 🔴 HIGH (~72) | Young + thin history |
 
 **Why deployer reputation alone isn't enough.** Wallet `23QKRDUw6ayNoF2HSgLMNityrEMZ6BFaTiVNYKMUHbcU`
 scores 🟢 LOW (16) on its own (297 days old, 5 apps) yet it deployed a **honeypot
@@ -104,11 +105,11 @@ A Telegram demo bot wraps the same scoring logic so you can test it in chat
 without installing anything. Open **[@scry_intel_bot](https://t.me/scry_intel_bot)**
 and send `/demo`, or paste any Solana wallet address.
 
-Source + deploy steps: [`scry-bot`](../scry-bot).
+Source + deploy steps: [`scry-bot`](https://github.com/apexzeuss/scry-bot).
 
 ## Judge demo
 
-The fastest reproducible walkthrough is in [`../DEMO.md`](../DEMO.md). It covers
+The fastest reproducible walkthrough is in [`DEMO.md`](DEMO.md). It covers
 typecheck, tests, a healthy wallet, a risky deployer, degraded-RPC confidence,
 deployment watching, and the Telegram bot.
 
@@ -136,8 +137,8 @@ Every report also includes:
 ## Repo layout
 
 ```
+SKILL.md                      discoverable skill entry point / router
 skill/
-  SKILL.md                    entry point / router (progressive loading)
   wallet-risk-scoring.md      module 1 instructions
   deployment-watcher.md       module 2 instructions
 scripts/
