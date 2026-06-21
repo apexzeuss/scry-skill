@@ -3,7 +3,7 @@ name: scry-skill
 description: Evaluate trust and novelty for Solana wallets and new on-chain deployments. Use this skill whenever the user wants to check if a Solana wallet is trustworthy, score wallet risk, monitor new token/program deployments, or flag potentially suspicious on-chain activity. Triggers on phrases like "is this wallet safe", "check this address", "scan this wallet", "watch for new deployments", "is this token a rug", even if the user doesn't use the exact word "risk" or "score".
 ---
 
-# Solana On-Chain Intel
+# Scry — Solana On-Chain Intel
 
 Gives an agent two related capabilities for judging trust and novelty on Solana,
 using only standard Solana RPC (no paid API required to start):
