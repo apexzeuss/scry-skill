@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "scan": "tsx scripts/scan_wallet.ts",
-    "watch": "tsx scripts/watch_deployments.ts"
+    "watch": "tsx scripts/watch_deployments.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test tests/*.test.ts"
   },
   "dependencies": {
     "@solana/web3.js": "^1.95.3"

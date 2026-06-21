@@ -5,13 +5,15 @@ for **Solana**:
 
 1. **Wallet risk scoring** — score any wallet `0-100` from its on-chain
    behaviour (account age, activity, program diversity, wash/counterparty
-   concentration, dump behaviour), with an explainable breakdown.
+   concentration, dump behaviour), with an explainable breakdown and confidence
+   level.
 2. **Deployment watching** — watch new token mints and program deploys, resolve
    each deployer, score it with module 1, and flag the risky ones.
 
 Built for the **Ship Useful Agent Skills** bounty (Superteam Brasil). Solana
 only. Explainable heuristics over opaque models, so the scoring is easy to
-verify.
+verify. When RPC data is incomplete, Scry reports degraded confidence instead of
+pretending the score is complete.
 
 ## Why
 
@@ -69,6 +71,7 @@ npx tsx scripts/scan_wallet.ts <SOLANA_ADDRESS> [--days N] [--json]
 ```
 Wallet:     DTSUkYHd2e9P2HLyZfbLarsbDdPhQUhZnWjRYuJZQRC8
 Risk:       LOW (11/100)
+Confidence: HIGH (5/5 signals)
 
 Signals:
   account age:        0d+
@@ -103,6 +106,12 @@ and send `/demo`, or paste any Solana wallet address.
 
 Source + deploy steps: [`scry-bot`](../scry-bot).
 
+## Judge demo
+
+The fastest reproducible walkthrough is in [`../DEMO.md`](../DEMO.md). It covers
+typecheck, tests, a healthy wallet, a risky deployer, degraded-RPC confidence,
+deployment watching, and the Telegram bot.
+
 ## How the score works
 
 It is a documented weighted sum, not ML. Full breakdown of every weight and
@@ -117,6 +126,12 @@ threshold is in [`rules/risk-thresholds.md`](rules/risk-thresholds.md). Summary:
 | dump behaviour | 0.20 | acquires then empties token accounts |
 
 `risk_level`: low `0-33`, medium `34-66`, high `67-100`.
+
+Every report also includes:
+
+- `confidence`: `high`, `medium`, or `low`
+- `signals_available` / `signals_total`
+- `rpc_degraded`: whether any scored signal had to be excluded
 
 ## Repo layout
 
@@ -142,6 +157,8 @@ LICENSE                       MIT
 ## Limitations & roadmap
 
 - `rug_history_flag` is a cheap heuristic proxy, not a definitive rug verdict.
+- Confidence measures data completeness, not whether the risk verdict is
+  guaranteed correct.
 - Full rug detection (liquidity-pull analysis, mint-authority abuse, holder
   distribution) needs enriched data (Helius enhanced transactions / DAS API).
   That is the planned v2 upgrade.

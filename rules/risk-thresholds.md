@@ -19,6 +19,18 @@ risk_score = round( 100 * ( Σ component_i * weight_i ) / Σ weight_i )   // 0-1
 | 34-66 | medium |
 | 67-100 | high |
 
+`confidence`:
+
+| available signals | confidence |
+| --- | --- |
+| 5/5 | high |
+| 3-4/5 | medium |
+| 0-2/5 | low |
+
+Confidence measures data completeness, not certainty that the verdict is right.
+For example, public RPC may block transaction sampling; the score remains
+explainable, but the report is marked as degraded.
+
 Weights are renormalized over only the **available** components (see
 "Graceful degradation" below), so a missing signal never silently drags the
 score toward zero.
@@ -86,7 +98,7 @@ The model only scores what the RPC can deliver:
 
 - **Public RPC refuses `getParsedTransactions`** → `diversity` and `wash` are
   dropped and weights renormalized over `{age, activity, dump}`. The report's
-  `notes` say so.
+  `notes` say so, and `rpc_degraded` is set.
 - **Signature cap hit** → `age` is dropped (see above).
 
 A degraded score must never be presented as a full-confidence one. The scripts
