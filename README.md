@@ -161,9 +161,11 @@ threshold is in [`rules/risk-thresholds.md`](rules/risk-thresholds.md). Summary:
 | wash concentration | 0.20 | loops with a few counterparties |
 | dump behaviour | 0.20 | acquires then empties token accounts |
 
-`risk_level`: low `0-33`, medium `34-66`, high `67-100`.
+Wallet `risk_level`: low `0-33`, medium `34-66`, high `67-100`. The **token**
+rug check uses its own additive score (freeze authority weighted highest); both
+are documented in [`rules/risk-thresholds.md`](rules/risk-thresholds.md).
 
-Every report also includes:
+Every wallet report also includes:
 
 - `confidence`: `high`, `medium`, or `low`
 - `signals_available` / `signals_total`
@@ -195,14 +197,17 @@ CLAUDE.md  DEMO.md  install.sh  README.md  LICENSE (MIT)
 
 ## Limitations & roadmap
 
-- `rug_history_flag` is a cheap heuristic proxy, not a definitive rug verdict.
-- Confidence measures data completeness, not whether the risk verdict is
+- The wallet `rug_history_flag` is a cheap heuristic proxy, not a definitive rug
+  verdict. Confidence measures data completeness, not whether the verdict is
   guaranteed correct.
-- Full rug detection (liquidity-pull analysis, mint-authority abuse, holder
-  distribution) needs enriched data (Helius enhanced transactions / DAS API).
-  That is the planned v2 upgrade.
-- Public RPC rate-limits the transaction-level signals; a Helius URL restores
-  the full signal set.
+- The token rug check already covers mint/freeze authority, liquidity, market
+  cap, holder count, supply concentration, and deployer reputation. Still on the
+  v2 list: detecting whether the **liquidity pool itself** is locked or burned,
+  Token-2022 transfer-fee / transfer-hook honeypots, and bundle/sniper analysis.
+- `top10_pct` can include the liquidity-pool account, so high values right after
+  launch are partly expected; the report says so.
+- Public RPC rate-limits the transaction-level wallet signals, and holder count
+  needs a Helius (DAS) endpoint; a Helius URL restores the full signal set.
 
 ## Disclaimer
 
