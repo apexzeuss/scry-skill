@@ -47,7 +47,20 @@ Summary: young wallet, thin history, concentrated behaviour
 Why this matters: new throwaway deployers are exactly the kind of account agents
 should treat cautiously.
 
-## 4. Show Honest Degradation
+## 4. Rug-Check A Token
+
+```bash
+npm run scan-token -- <TOKEN_MINT>
+```
+
+Paste any token mint (e.g. from pump.fun or DexScreener). Expected: a verdict plus
+honeypot/dilution authorities, liquidity, market cap, age, holder count, supply
+concentration, and the deployer's own risk score.
+
+Why this matters: a token can have its authorities revoked and still be a trap if
+it is brand-new, thinly held, concentrated, or launched by a high-risk wallet.
+
+## 5. Show Honest Degradation
 
 Run without a premium RPC:
 
@@ -67,7 +80,7 @@ Notes:
 Why this matters: Scry does not pretend missing data is certainty. It
 renormalizes the score over available components and tells the user.
 
-## 5. Watch New Deployments
+## 6. Watch New Deployments
 
 For a short terminal demo:
 
@@ -92,7 +105,7 @@ What to look for:
 Why this matters: deployer reputation alone is not enough. Scry also checks hard
 token-level signals.
 
-## 6. Try The Telegram Bot
+## 7. Try The Telegram Bot
 
 Open [`@scry_intel_bot`](https://t.me/scry_intel_bot) and send:
 

@@ -84,6 +84,25 @@ deployer wallet itself scores low:
 
 This is why a clean-looking deployer can still get its token flagged.
 
+## Token rug-check score (`scan_token.ts`)
+
+The standalone token scan turns the same hard signals (plus market + deployer
+data) into a 0-100 `risk_score`. Additive weights, capped at 100:
+
+| Condition | Points | Why |
+| --- | --- | --- |
+| Freeze authority active | +50 | Honeypot: holders can be frozen out |
+| Mint authority active | +25 | Supply can be inflated |
+| Deployer wallet scores ≥ 67 | +20 | Launched by a high-risk wallet |
+| Has a market but liquidity < $1k | +15 | Effectively can't sell |
+| Has a market and top-10 holders ≥ 90% | +10 | Extreme concentration |
+
+`risk_level`: low `<25`, medium `25-49`, high `≥50` (so a lone freeze-authority
+honeypot flag is already HIGH). Liquidity / market cap / volume / age come from
+DexScreener; holder count from Helius DAS (`null` on other RPCs). `top10_pct` may
+include the liquidity-pool account, so high values right after launch are partly
+expected, the report says so.
+
 ## Maturity dampener
 
 For clearly established/high-volume wallets (signature cap hit, or ≥ 200 sampled

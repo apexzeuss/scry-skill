@@ -1,11 +1,12 @@
 {
   "name": "scry-skill",
   "version": "0.1.0",
-  "description": "Claude Code skill: wallet risk scoring + new-deployment watching for Solana.",
+  "description": "Claude Code skill: wallet risk scoring, token rug checks, and new-deployment watching for Solana.",
   "license": "MIT",
   "type": "module",
   "scripts": {
     "scan": "tsx scripts/scan_wallet.ts",
+    "scan-token": "tsx scripts/scan_token.ts",
     "watch": "tsx scripts/watch_deployments.ts",
     "typecheck": "tsc --noEmit",
     "test": "node --import tsx --test tests/*.test.ts"

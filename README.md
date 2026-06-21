@@ -1,14 +1,18 @@
 # scry-skill
 
-A Claude Code skill that gives AI agents two on-chain intelligence capabilities
+A Claude Code skill that gives AI agents three on-chain intelligence capabilities
 for **Solana**:
 
 1. **Wallet risk scoring** — score any wallet `0-100` from its on-chain
    behaviour (account age, activity, program diversity, wash/counterparty
    concentration, dump behaviour), with an explainable breakdown and confidence
    level.
-2. **Deployment watching** — watch new token mints and program deploys, resolve
-   each deployer, score it with module 1, and flag the risky ones.
+2. **Token rug check** — scan a token mint for honeypot/dilution authorities,
+   liquidity, market cap, supply concentration, holder count, and the deployer's
+   risk score, so a token can pass the basic check and still get flagged for
+   being thin, concentrated, or dev-rugged.
+3. **Deployment watching** — watch new token mints and program deploys, resolve
+   each deployer, score it with capability 1, and flag the risky ones.
 
 Built for the **Ship Useful Agent Skills** bounty (Superteam Brasil). Solana
 only. Explainable heuristics over opaque models, so the scoring is easy to
@@ -83,6 +87,37 @@ Signals:
   ...
 ```
 
+### Rug-check a token
+
+```bash
+npx tsx scripts/scan_token.ts <TOKEN_MINT> [--json]
+```
+
+```
+Token:      <mint>
+Risk:       MEDIUM (20/100)
+
+Rug checks:
+  can freeze your tokens:  no (revoked)
+  can mint more supply:    no (capped)
+
+Market:
+  liquidity:   $6.3k
+  market cap:  $6.3k
+  age:         today
+
+Holders:
+  holder count:  71
+  top holder:    50% of supply
+  top 10:        72% of supply (may include the pool)
+
+Deployer:
+  9kW6LfK1… — HIGH 76/100
+```
+
+Note: a token with both authorities revoked can still flag, brand-new, thinly
+held, concentrated, or launched by a high-risk deployer.
+
 ### Watch deployments
 
 ```bash
@@ -137,22 +172,25 @@ Every report also includes:
 ## Repo layout
 
 ```
-SKILL.md                      discoverable skill entry point / router
 skill/
-  wallet-risk-scoring.md      module 1 instructions
-  deployment-watcher.md       module 2 instructions
+  SKILL.md                    entry point / router (progressive loading)
+  wallet-risk-scoring.md      capability 1 instructions
+  token-rug-check.md          capability 2 instructions
+  deployment-watcher.md       capability 3 instructions
 scripts/
   scan_wallet.ts              wallet scoring (RPC + scoring math)
+  scan_token.ts               token rug check (authorities, market, holders, deployer)
   watch_deployments.ts        deployment polling + deployer scoring
 agents/
   intel-agent.md              combined scan + score flow
 commands/
   scan-wallet.md              /scan-wallet <address>
+  scan-token.md               /scan-token <mint>
   watch-deployments.md        /watch-deployments
 rules/
   risk-thresholds.md          scoring weights + thresholds (tune here)
-install.sh
-LICENSE                       MIT
+tests/                        unit tests for the scorer
+CLAUDE.md  DEMO.md  install.sh  README.md  LICENSE (MIT)
 ```
 
 ## Limitations & roadmap

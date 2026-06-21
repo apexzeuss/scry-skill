@@ -5,18 +5,20 @@ description: Combined Solana on-chain intel flow — scan deployments and score 
 
 # Solana Intel Agent
 
-Combines both modules into one "scan + score" pass.
+Combines the skill's capabilities into one "scan + score" pass.
 
 ## Inputs
 
 - Optional filters: tokens-only / programs-only, a minimum risk score, how many
   recent blocks to sweep.
-- Or a specific list of wallet addresses to score directly.
+- Or a specific list of addresses: wallets to score, or token mints to rug-check.
 
 ## Flow
 
-1. If the user gave addresses, score each with `scripts/scan_wallet.ts` and skip
-   to step 4.
+1. If the user gave addresses, for each one: rug-check it with
+   `scripts/scan_token.ts` (see `skill/token-rug-check.md`); if that returns
+   "not a token mint," score it as a wallet with `scripts/scan_wallet.ts`. Then
+   skip to step 4.
 2. Otherwise sweep recent deployments with `scripts/watch_deployments.ts --once`
    (see `skill/deployment-watcher.md`).
 3. Each flagged deployment already carries its deployer's risk score.
